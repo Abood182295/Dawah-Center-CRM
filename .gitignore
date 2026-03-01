@@ -1,0 +1,17 @@
+# Database Connection (Crucial for Security!)
+db_connection.php
+
+# XAMPP & OS Junk
+.DS_Store
+Thumbs.db
+error_log
+access_log
+
+# Uploads & Temporary Data
+/uploads/
+*.tmp
+*.bak
+
+# Environment / Config Files
+config.php
+.env
