@@ -3,7 +3,7 @@ include('db_connection.php'); // Your custom port 3307 connection
 
 // 1. Set headers to force download as CSV/Excel
 header('Content-Type: text/csv; charset=utf-8');
-header('Content-Disposition: attachment; filename=Association_Customers_' . date('Y-m-d') . '.csv');
+header('Content-Disposition: attachment; filename=Association_beneficiarys_' . date('Y-m-d') . '.csv');
 
 // 2. Open the output stream
 $output = fopen('php://output', 'w');
@@ -15,7 +15,7 @@ fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
 fputcsv($output, array('Full Name', 'Phone Number', 'Category', 'Registration Date', 'Last Messaged'));
 
 // 5. Fetch Data from MySQL
-$sql = "SELECT full_name, phone_number, category, created_at, last_messaged_at FROM customers ORDER BY created_at DESC";
+$sql = "SELECT full_name, phone_number, category, created_at, last_messaged_at FROM beneficiarys ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
 while($row = $result->fetch_assoc()) {

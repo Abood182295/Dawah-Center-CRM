@@ -1,7 +1,7 @@
 <?php
 // Set headers to force download as a CSV file
 header('Content-Type: text/csv; charset=utf-8');
-header('Content-Disposition: attachment; filename=customer_template.csv');
+header('Content-Disposition: attachment; filename=beneficiary_template.csv');
 
 // Open the output stream
 $output = fopen('php://output', 'w');

@@ -1,8 +1,8 @@
 <?php
-include('db_connection.php'); // Port 3307
+include('db_connection.php'); // Confirmed on port 3307
 include('lang.php');
 
-if (isset($_FILES['csv_file'])) {
+if (isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == 0) {
     $fileName = $_FILES['csv_file']['tmp_name'];
 
     if ($_FILES['csv_file']['size'] > 0) {
@@ -13,22 +13,40 @@ if (isset($_FILES['csv_file'])) {
 
         $success_count = 0;
 
-        while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
-            $name = mysqli_real_escape_string($conn, $column[0]);
-            $phone = mysqli_real_escape_string($conn, $column[1]);
-            $category = mysqli_real_escape_string($conn, $column[2]);
+        /* =========================================
+           SECURE PREPARED STATEMENT
+           ========================================= */
+        // We prepare the query ONCE outside the loop for better performance
+        $stmt = $conn->prepare("INSERT IGNORE INTO beneficiaries (full_name, phone_number, category, created_at) VALUES (?, ?, ?, NOW())");
 
-            // SQL to insert and prevent duplicates based on phone number
-            $sql = "INSERT IGNORE INTO customers (full_name, phone_number, category, status) 
-                    VALUES ('$name', '$phone', '$category', 'Active')";
-            
-            if ($conn->query($sql)) { $success_count++; }
+        while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
+            // Ensure the CSV has at least 3 columns to avoid "Undefined offset" errors
+            if (count($column) >= 3) {
+                $name = trim($column[0]);
+                $phone = trim($column[1]);
+                $category = trim($column[2]);
+
+                // Bind the variables and execute
+                $stmt->bind_param("sss", $name, $phone, $category);
+                
+                if ($stmt->execute()) {
+                    // Check if a row was actually inserted (INSERT IGNORE might skip duplicates)
+                    if ($stmt->affected_rows > 0) {
+                        $success_count++;
+                    }
+                }
+            }
         }
 
+        $stmt->close();
         fclose($file);
-        echo "<script>alert('$success_count " . $text['import_success'] . "'); window.location.href='view_customers.php';</script>";
+        
+        // Use singular naming convention: view_beneficiary.php
+        echo "<script>alert('$success_count " . $text['import_success'] . "'); window.location.href='view_beneficiary.php';</script>";
     }
 } else {
-    header("Location: import_customers.php");
+    // Use singular naming convention: import_beneficiary.php
+    header("Location: import_beneficiary.php");
+    exit();
 }
 ?>

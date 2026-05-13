@@ -1,10 +1,12 @@
 <?php
 session_start();
 
+// Default to Arabic if no session is set
 if (!isset($_SESSION['lang'])) {
     $_SESSION['lang'] = 'ar';
 }
 
+// Handle language switching
 if (isset($_GET['lang'])) {
     $_SESSION['lang'] = $_GET['lang'];
     header("Location: " . strtok($_SERVER['REQUEST_URI'], '?'));
@@ -15,100 +17,125 @@ $lang = $_SESSION['lang'];
 
 $translations = [
     'en' => [
-        'title' => 'Association CRM',
-        'welcome' => 'Welcome, Abdullah. Select an action below:',
-        'add_cust' => 'Add Customer',
-        'add_desc' => 'Register new visitor numbers',
-        'view_db' => 'View Database',
-        'view_desc' => 'Search and manage lists',
-        'send_msg' => 'Send Messages',
-        'coming_soon' => '(Coming Soon...)',
-        'switch' => 'العربية',
-        'actions' => 'Actions',
-        'edit' => 'Edit',
-        'delete' => 'Delete',
-        'update_header' => 'Update Customer Info',
-        'confirm_delete' => 'Are you sure you want to delete this customer?',
-        'broadcast_header' => 'Send Broadcast Message',
-        'select_cat' => 'Select Category to Message',
-        'msg_placeholder' => 'Type your offer message here...',
-        'send_btn' => 'Send to All',
-        'count_label' => 'Total customers in this category: ',
-        'preview_header' => 'Mobile Preview',
-        'search_placeholder' => 'Search by name or number...',
-        'filter_btn' => 'Search',
-        'all_cats' => 'All Categories',
-        'btn_print' => 'Print Report',
-        'edit_title' => 'Edit Customer Information',
-        'update_btn' => 'Update Record',
-        'success_update' => 'Customer updated successfully!',
-        'date' => 'Registration Date',
-        'import_title' => 'Import Customers from CSV',
-        'select_file' => 'Select CSV File',
-        'btn_upload' => 'Upload and Import',
-        'import_success' => 'Records imported successfully!',
-        'import_error' => 'Error importing data. Please check the file format.',
-        'btn_export' => 'Export to Excel',
-        // Form & Table
-        'reg_header' => 'Register New Customer',
-        'lbl_name' => 'Full Name',
-        'lbl_phone' => 'Phone Number',
-        'lbl_cat' => 'Category',
-        'btn_save' => 'Save to Database',
-        'opt_gen' => 'General',
-        'opt_off' => 'Offers',
-        'opt_vln' => 'Volunteer',
-        'opt_dawah' => 'Dawah',
-        'back' => 'Back to Dashboard',
-        'date' => 'Registration Date'
+        // Header & Dashboard
+        'title'             => 'Beneficiary Management System',
+        'welcome'           => 'Welcome to the Management Portal. Select an action below:',
+        'switch'            => 'العربية',
+        'back'              => 'Back to Dashboard',
+        'back_to_db'        => 'Back to Beneficiary Database',
+        
+        // Main Actions
+        'add_cust'          => 'Add Beneficiary',
+        'add_desc'          => 'Register new book recipients',
+        'view_db'           => 'Beneficiary Database',
+        'view_desc'         => 'Search and manage lists',
+        'send_msg'          => 'Send Messages',
+        'send_desc'         => 'Send group messages',
+        'coming_soon'       => '(Coming Soon...)',
+        
+        // Forms & Registration
+        'reg_header'        => 'Beneficiary Registration',
+        'lbl_name'          => 'Full Name',
+        'lbl_phone'         => 'Phone Number',
+        'lbl_cat'           => 'Category',
+        'btn_save'          => 'Save to Database',
+        'date'              => 'Registration Date',
+        'phone_error' => 'Please enter a valid phone number (7-15 digits)',
+        
+        // Categories
+        'opt_gen'      => 'General',
+        'opt_lectures' => 'Lectures & Lessons',
+        'opt_projects' => 'Programs & Projects',
+        'opt_library'  => 'The Library',
+        
+        // Table & Actions
+        'actions'           => 'Actions',
+        'edit'              => 'Edit',
+        'delete'            => 'Delete',
+        'edit_title'        => 'Edit Beneficiary Information',
+        'update_btn'        => 'Update Record',
+        'confirm_delete'    => 'Are you sure you want to delete this beneficiary?',
+        'success_update'    => 'Beneficiary updated successfully!',
+        
+        // Search & Import/Export
+        'search_placeholder'=> 'Search by name or number...',
+        'filter_btn'        => 'Search',
+        'all_cats'          => 'All Categories',
+        'btn_print'         => 'Print Report',
+        'btn_export'        => 'Export to Excel',
+        'import_title'      => 'Import Beneficiaries from CSV',
+        'select_file'       => 'Select CSV File',
+        'btn_upload'        => 'Upload and Import',
+        'import_success'    => 'Records imported successfully!',
+        'import_error'      => 'Error importing data. Check file format.',
+        
+        // Messaging
+        'broadcast_header'  => 'Send Broadcast Message',
+        'select_cat'        => 'Select Category to Message',
+        'msg_placeholder'   => 'Type your message here...',
+        'send_btn'          => 'Prepare Dispatch',
+        'count_label'       => 'Total beneficiaries in this category: ',
+        'preview_header'    => 'Mobile Preview',
     ],
+    
     'ar' => [
-        'title' => 'نظام إدارة العملاء',
-        'welcome' => 'مرحباً عبدالله، اختر إجراءً مما يلي:',
-        'add_cust' => 'إضافة عميل',
-        'add_desc' => 'تسجيل أرقام الزوار الجدد',
-        'view_db' => 'عرض القاعدة',
-        'view_desc' => 'البحث وإدارة القوائم',
-        'send_msg' => 'إرسال رسائل',
-        'coming_soon' => '(قريباً...)',
-        'switch' => 'English',
-        'actions' => 'الإجراءات',
-        'edit' => 'تعديل',
-        'delete' => 'حذف',
-        'update_header' => 'تحديث معلومات العميل',
-        'confirm_delete' => 'هل أنت متأكد أنك تريد حذف هذا العميل؟',
-        'broadcast_header' => 'إرسال رسالة جماعية',
-        'select_cat' => 'اختر الفئة المستهدفة',
-        'msg_placeholder' => 'اكتب نص العرض هنا...',
-        'send_btn' => 'إرسال للكل',
-        'count_label' => 'إجمالي العملاء في هذه الفئة: ',
-        'preview_header' => 'معاينة الهاتف',
-        'search_placeholder' => 'ابحث بالاسم أو الرقم...',
-        'filter_btn' => 'بحث',
-        'all_cats' => 'كل الفئات',
-        'btn_print' => 'طباعة التقرير',
-        'edit_title' => 'تعديل بيانات العميل',
-        'update_btn' => 'تحديث البيانات',
-        'success_update' => 'تم تحديث بيانات العميل بنجاح!',
-        'date' => 'تاريخ التسجيل',
-        'import_title' => 'استيراد العملاء من ملف CSV',
-        'select_file' => 'اختر ملف CSV',
-        'btn_upload' => 'رفع واستيراد',
-        'import_success' => 'تم استيراد البيانات بنجاح!',
-        'import_error' => 'خطأ في استيراد البيانات. يرجى التحقق من صيغة الملف.',
-        'btn_export' => 'تصدير إلى إكسل',
-        // Form & Table
-        'reg_header' => 'تسجيل عميل جديد',
-        'lbl_name' => 'الاسم الكامل',
-        'lbl_phone' => 'رقم الجوال',
-        'lbl_cat' => 'الفئة',
-        'btn_save' => 'حفظ في قاعدة البيانات',
-        'opt_gen' => 'عام',
-        'opt_off' => 'عروض',
-        'opt_vln' => 'متطوع',
-        'opt_dawah' => 'دعوة',
-        'back' => 'العودة للرئيسية',
-        'date' => 'تاريخ التسجيل'
+        // Header & Dashboard
+        'title'             => 'نظام إدارة المستفيدين',
+        'welcome'           => 'مرحباً بك في بوابة الإدارة. الرجاء اختيار إجراء من القائمة:',
+        'switch'            => 'English',
+        'back'              => 'العودة للرئيسية',
+        'back_to_db'        => 'العودة لقاعدة بيانات المستفيدين',
+        // Main Actions
+        'add_cust'          => 'إضافة مستفيد',
+        'add_desc'          => 'تسجيل مستلمي الكتب الجدد',
+        'view_db'           => 'قاعدة بيانات المستفيدين',
+        'view_desc'         => 'البحث وإدارة القوائم',
+        'send_msg'          => 'إرسال رسائل',
+        'send_desc'         => 'إرسال رسائل جماعية',
+        'coming_soon'       => '(قريباً...)',
+        
+        // Forms & Registration
+        'reg_header'        => 'تسجيل مستفيد جديد',
+        'lbl_name'          => 'الاسم الكامل',
+        'lbl_phone'         => 'رقم الجوال',
+        'lbl_cat'           => 'الفئة',
+        'btn_save'          => 'حفظ في قاعدة البيانات',
+        'date'              => 'تاريخ التسجيل',
+        'phone_error' => 'الرجاء إدخال رقم هاتف صحيح (7-15 رقم)',
+        // Categories
+        'opt_gen'      => 'عام',
+        'opt_lectures' => 'محاضرات و دروس علمية',
+        'opt_projects' => 'برامج و مشاريع',
+        'opt_library'  => 'المكتبة',
+             
+        // Table & Actions
+        'actions'           => 'الإجراءات',
+        'edit'              => 'تعديل',
+        'delete'            => 'حذف',
+        'edit_title'        => 'تعديل بيانات المستفيد',
+        'update_btn'        => 'تحديث البيانات',
+        'confirm_delete'    => 'هل أنت متأكد من حذف هذا المستفيد؟',
+        'success_update'    => 'تم تحديث بيانات المستفيد بنجاح!',
+        
+        // Search & Import/Export
+        'search_placeholder'=> 'ابحث بالاسم أو الرقم...',
+        'filter_btn'        => 'بحث',
+        'all_cats'          => 'كل الفئات',
+        'btn_print'         => 'طباعة التقرير',
+        'btn_export'        => 'تصدير إلى إكسل',
+        'import_title'      => 'استيراد المستفيدين من ملف CSV',
+        'select_file'       => 'اختر ملف CSV',
+        'btn_upload'        => 'رفع واستيراد',
+        'import_success'    => 'تم استيراد البيانات بنجاح!',
+        'import_error'      => 'خطأ في استيراد البيانات. يرجى التحقق من صيغة الملف.',
+        
+        // Messaging
+        'broadcast_header'  => 'إرسال رسالة جماعية',
+        'select_cat'        => 'اختر الفئة المستهدفة',
+        'msg_placeholder'   => 'اكتب نص الرسالة هنا...',
+        'send_btn'          => 'تجهيز الإرسال',
+        'count_label'       => 'إجمالي المستفيدين في هذه الفئة: ',
+        'preview_header'    => 'معاينة الهاتف',
     ]
 ];
 
