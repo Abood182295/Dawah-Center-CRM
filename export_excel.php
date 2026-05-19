@@ -15,7 +15,7 @@ fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
 fputcsv($output, array('Full Name', 'Phone Number', 'Category', 'Registration Date', 'Last Messaged'));
 
 // 5. Fetch Data from MySQL
-$sql = "SELECT full_name, phone_number, category, created_at, last_messaged_at FROM beneficiarys ORDER BY created_at DESC";
+$sql = "SELECT full_name, phone_number, category, created_at, last_messaged_at FROM beneficiaries ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
 while($row = $result->fetch_assoc()) {

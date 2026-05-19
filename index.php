@@ -1,4 +1,15 @@
-<?php include('lang.php'); ?>
+<?php 
+// 1. Check if the session is running
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// 2. Destroy the security badge! 
+// (We use unset so we don't delete your Arabic/English language memory)
+if (isset($_SESSION['authenticated'])) {
+    unset($_SESSION['authenticated']);
+}
+include('lang.php'); ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="<?php echo ($lang == 'ar' ? 'rtl' : 'ltr'); ?>">
 <head>

@@ -1,11 +1,11 @@
 <?php
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+    }
 // Default to Arabic if no session is set
 if (!isset($_SESSION['lang'])) {
     $_SESSION['lang'] = 'ar';
-}
-
+    }
 // Handle language switching
 if (isset($_GET['lang'])) {
     $_SESSION['lang'] = $_GET['lang'];

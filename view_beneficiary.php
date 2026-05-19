@@ -1,6 +1,13 @@
-<?php 
+<?php
+session_start();
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    header("Location: login.php?redirect=view_beneficiary.php");
+    exit();
+}
+
 include('db_connection.php'); 
 include('lang.php'); 
+
 
 // Initial load logic (for when the page first opens)
 $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
@@ -13,6 +20,7 @@ $sql .= " ORDER BY created_at DESC";
 $result = $conn->query($sql);
 $total_rows = $result->num_rows;
 ?>
+
 
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" dir="<?php echo ($lang == 'ar' ? 'rtl' : 'ltr'); ?>">
